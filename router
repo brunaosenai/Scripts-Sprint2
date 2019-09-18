@@ -1,1 +1,90 @@
-
+enable
+configure terminal
+hostname RT-01
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS"
+enable secret SenhadaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+line vty 0 15
+password SenhadaVTY
+login local
+transport input ssh
+exec-timeout 10
+exit
+login block-for 180 attempts 3 within 60
+security passwords min-length 8
+username maurocortez privilege 15 secret Otirano135
+username isabellabento privilege 15 secret IsaBento
+username danieleusebio privilege 15 secret DanielEusebio
+username victorsouza privilege 15 secret VictorGomes123
+username brunogaldino privilege 15 secret Brunao123
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+interface gigabitEthernet 0/1.10
+encapsulation dot1Q 10
+ip address 172.16.0.1 255.255.248.0
+description REDE - Voz
+no shutdown
+exit
+interface gigabitEthernet 0/1.20
+encapsulation dot1Q 20
+ip address 172.16.8.1 255.255.248.0
+description REDE - Consultores
+no shutdown
+exit
+interface gigabitEthernet 0/1.30
+encapsulation dot1Q 30
+ip address 172.16.16.1 255.255.254.0
+description REDE - Analistas
+no shutdown
+exit
+interface gigabitEthernet 0/1.40
+encapsulation dot1Q 40
+ip address 172.16.18.1 255.255.255.128
+description REDE - RH
+no shutdown
+exit
+interface gigabitEthernet 0/1.50
+encapsulation dot1Q 50
+ip address 172.16.18.129 255.255.255.128
+description REDE - Administracao
+no shutdown
+exit
+interface gigabitEthernet 0/1.60
+encapsulation dot1Q 60
+ip address 172.16.19.1 255.255.255.128
+description REDE - Financas
+no shutdown
+exit
+interface gigabitEthernet 0/1.70
+encapsulation dot1Q 70
+ip address 172.16.19.129 255.255.255.192
+description REDE - TI
+no shutdown
+exit
+interface gigabitEthernet 0/1.80
+encapsulation dot1Q 80
+ip address 172.16.19.193 255.255.255.192
+description REDE - Recepcao
+no shutdown
+exit
+interface gigabitEthernet 0/1.90
+encapsulation dot1Q 90
+ip address 172.16.20.1 255.255.255.224
+description REDE - Qualidade
+no shutdown
+exit
+interface gigabitEthernet 0/1.100
+encapsulation dot1Q 100
+ip address 172.16.20.33 255.255.255.240
+description REDE - Qualidade
+no shutdown
+exit
+interface gigabitEthernet 0/1
+no shutdown
+exit 
+ip route 192.168.0.0 255.255.255.0 172.16.20.130
+do wr
